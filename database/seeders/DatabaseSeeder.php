@@ -21,23 +21,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'زينب مهدي عبد الله القلاف',
-            'email' => 'zineb.elgendy@gmail.com',
-            'role' => 'supervisor',
-            'cid' => '000000000000',
-            'file_number' => '0000000000',
-            'replacement_id' => null,
-            'department_id' => 1,
-        ]);
-        User::factory()->create([
             'name' => 'حازم محمد اسماعيل',
-            'email' => 'hazem.elgendy@gmail.com',
+            'email' => 'hazem.ismail@hotmail.com',
             'role' => 'admin',
             'cid' => '282102800373',
-            'file_number' => '1234567890',
+            'file_number' => '000000',
             'replacement_id' => null,
             'department_id' => 1,
-            'supervisor_id' => 1,
+            'password' => bcrypt('12345678'),
         ]);
     }
 }
