@@ -161,9 +161,11 @@ class PermissionController extends Controller
 
         $mpdf->watermarkImgBehind = true;
         $mpdf->showWatermarkImage = true;
+        $mpdf->showImageErrors = false;
         $mpdf->watermarkImageAlpha = 1;
         $mpdf->SetProtection(['copy', 'print'], '', 'pass');
         $mpdf->WriteHTML(view('pages.permissions.pdf', $data)->render());
-        return $mpdf->Output($data['title'].'.pdf', 'I');
+        // download the pdf
+        return $mpdf->Output($data['title'].'.pdf', 'D');
     }
 }

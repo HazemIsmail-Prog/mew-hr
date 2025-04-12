@@ -146,9 +146,11 @@
         'direction-in-out' => $mission->direction == 'in-out'
         ])>
     </div>
-    <div class="manager-signature">
-        <img  class="manager-signature" src="data:image/png;base64,{{ $managerSignatureBase64 }}" alt="توقيع المستخدم" class="signature-image">
-    </div>  
+    @if($managerSignatureBase64)
+        <div class="manager-signature">
+            <img  class="manager-signature" src="data:image/png;base64,{{ $managerSignatureBase64 }}" alt="توقيع المستخدم" class="signature-image">
+        </div>  
+    @endif
 </body>
 </html>
 

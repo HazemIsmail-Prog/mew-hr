@@ -141,9 +141,11 @@ class MissionController extends Controller
         $mpdf->SetWatermarkImage(public_path('images/mission.jpg'));
         $mpdf->watermarkImgBehind = true;
         $mpdf->showWatermarkImage = true;
+        $mpdf->showImageErrors = false;
         $mpdf->watermarkImageAlpha = 1;
         $mpdf->SetProtection(['copy', 'print'], '', 'pass');
         $mpdf->WriteHTML(view('pages.missions.pdf', $data)->render());
-        return $mpdf->Output($data['title'].'.pdf', 'I');
+        // download the pdf
+        return $mpdf->Output($data['title'].'.pdf', 'D');
     }
 }
