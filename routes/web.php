@@ -33,37 +33,37 @@ Route::middleware(['auth'])->group(function () {
     // Missions
     Route::post('missions/{mission}/change-status', [MissionController::class, 'changeStatus'])
     ->name('missions.changeStatus')
-    ->middleware(['signature', 'arabicName']);
+    ->middleware(['signature']);
 
     Route::get('missions/{mission}/pdf', [MissionController::class, 'pdf'])
-    ->middleware(['signature', 'arabicName']);
+    ->middleware(['signature']);
 
     Route::apiResource('missions', MissionController::class)
-    ->middleware(['signature', 'arabicName']);
+    ->middleware(['signature']);
 
     // Permissions
     Route::post('permissions/{permission}/change-status', [PermissionController::class, 'changeStatus'])
     ->name('permissions.changeStatus')
-    ->middleware(['signature', 'arabicName']);
+    ->middleware(['signature']);
 
     Route::get('permissions/{permission}/pdf', [PermissionController::class, 'pdf'])
-    ->middleware(['signature', 'arabicName']);
+    ->middleware(['signature']);
 
     Route::apiResource('permissions', PermissionController::class)
-    ->middleware(['signature', 'arabicName']);
+    ->middleware(['signature']);
     
     // Requests
     Route::get('requests/missions', [RequestController::class, 'missions'])
-    ->middleware(['signature', 'arabicName']);
+    ->middleware(['signature']);
 
     Route::get('requests/permissions', [RequestController::class, 'permissions'])
-    ->middleware(['signature', 'arabicName']);
+    ->middleware(['signature']);
 
     Route::get('requests/counts', [RequestController::class, 'getCounts'])
-    ->middleware(['signature', 'arabicName']);
+    ->middleware(['signature']);
 
     Route::get('requests', [RequestController::class, 'index'])
-    ->middleware(['signature', 'arabicName'])
+    ->middleware(['signature'])
     ->name('requests.index');
     
 });
