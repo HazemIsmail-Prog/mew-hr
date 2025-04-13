@@ -22,7 +22,7 @@ class UserController extends Controller
             ->with('department')
             ->with('supervisor')
             ->latest()
-            ->paginate(10);
+            ->paginate(30);
             return UserResource::collection($users);
         }
 
