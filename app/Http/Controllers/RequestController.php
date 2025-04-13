@@ -15,7 +15,7 @@ class RequestController extends Controller
     public function index()
     {
         abort_if(!request()->user()->can('viewAny', RequestModel::class), 403);
-        $users = auth()->user()->children()->get();
+        $users = auth()->user()->children()->orderBy('name')->get();
         return view('pages.requests.index', compact('users'));
     }
 
