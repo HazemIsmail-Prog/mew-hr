@@ -19,8 +19,18 @@ Route::get('/login-as-user/{id}', function ($id) {
     return redirect()->route('dashboard');
 })->name('login-as-user');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
+Route::get('dashboard', function () {
+    if(auth()->user()->role === 'admin') {
+        return redirect()->route('users.index');
+    }
+    if(auth()->user()->role === 'supervisor') {
+        return redirect()->route('requests.index');
+    }
+    if(auth()->user()->role === 'employee') {
+        return redirect()->route('missions.index');
+    }
+    return view('dashboard');
+})->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {

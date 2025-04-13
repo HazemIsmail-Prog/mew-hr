@@ -20,7 +20,7 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.group class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    <!-- <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item> -->
                     @can('viewAny', Department::class)
                         <flux:navlist.item icon="users" :href="route('departments.index')" :current="request()->routeIs('departments.*')" wire:navigate>{{ __('Departments') }}</flux:navlist.item>
                     @endcan
