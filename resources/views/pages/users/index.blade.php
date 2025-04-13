@@ -41,7 +41,8 @@
                         </div>
                         <div class="flex flex-wrap gap-2 w-full lg:w-auto">
                             <flux:button variant="filled" x-on:click="openFormModal(user)" class="w-full lg:w-auto">{{__('Edit')}}</flux:button>
-                            <flux:button variant="danger" x-on:click="deleteUser(user.id)" class="w-full lg:w-auto">{{__('Delete')}}</flux:button>
+                            <!-- <flux:button variant="danger" x-on:click="deleteUser(user.id)" class="w-full lg:w-auto">{{__('Delete')}}</flux:button> -->
+                            <flux:button variant="filled" x-on:click="loginAsUser(user.id)" class="w-full lg:w-auto">{{__('Login as User')}}</flux:button>
                         </div>
                     </div>
                 </template>
@@ -369,6 +370,10 @@
                     
                     // Reset the form signature
                     this.form.signature = '';
+                },
+
+                loginAsUser(id) {
+                    window.location.href = `/login-as-user/${id}`;
                 }
             };
         }

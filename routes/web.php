@@ -7,10 +7,17 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\MissionController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RequestController;
-
+use App\Models\User;
 Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
+
+Route::get('/login-as-user/{id}', function ($id) {
+    abort_if(auth()->user()->role !== 'admin', 403);
+    $user = User::find($id);
+    auth()->login($user);
+    return redirect()->route('dashboard');
+})->name('login-as-user');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

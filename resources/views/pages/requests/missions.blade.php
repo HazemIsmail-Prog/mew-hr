@@ -46,15 +46,27 @@
                             </div>
                         </div>
                         <div class="flex gap-2 w-full lg:w-auto">
-                            <flux:button x-show="mission.status !== 'approved'" variant="primary" x-on:click="approveMission(mission)" title="{{__('Approve')}}">
-                               {{__('Approve')}}
+                            <!-- Loading button that shows when any status change is in progress -->
+                            <flux:button x-show="loadingMissionId === mission.id" variant="primary" disabled>
+                                <svg class="animate-spin h-4 w-4 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                {{__('Processing...')}}
                             </flux:button>
-                            <flux:button x-show="mission.status !== 'rejected'" variant="danger" x-on:click="rejectMission(mission)" title="{{__('Reject')}}">
-                                {{__('Reject')}}
-                            </flux:button>
-                            <flux:button x-show="mission.status !== 'for review'" variant="filled" x-on:click="reviewMission(mission)" title="{{__('Review')}}">
-                                {{__('Review')}}
-                            </flux:button>
+                            
+                            <!-- Regular buttons that show when no status change is in progress -->
+                            <div x-show="loadingMissionId !== mission.id" class="flex gap-2 w-full lg:w-auto">
+                                <flux:button x-show="mission.status !== 'approved'" variant="primary" x-on:click="approveMission(mission)" title="{{__('Approve')}}">
+                                    {{__('Approve')}}
+                                </flux:button>
+                                <flux:button x-show="mission.status !== 'rejected'" variant="danger" x-on:click="rejectMission(mission)" title="{{__('Reject')}}">
+                                    {{__('Reject')}}
+                                </flux:button>
+                                <flux:button x-show="mission.status !== 'for review'" variant="filled" x-on:click="reviewMission(mission)" title="{{__('Review')}}">
+                                    {{__('Review')}}
+                                </flux:button>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -78,6 +90,7 @@
                 links: [],
                 currentPage: 1,
                 selectedMission: null,
+                loadingMissionId: null,
                 filters: {
                     user: '',
                     status: 'pending'
@@ -117,20 +130,25 @@
                 },
 
                 approveMission(mission) {
-                        axios.post(`/missions/${mission.id}/change-status`, {
-                            status: 'approved'
-                        })
-                        .then(response => {
-                            this.getMissions();
-                            this.$dispatch('refresh-counters');
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
+                    this.loadingMissionId = mission.id;
+                    axios.post(`/missions/${mission.id}/change-status`, {
+                        status: 'approved'
+                    })
+                    .then(response => {
+                        this.getMissions();
+                        this.$dispatch('refresh-counters');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        this.loadingMissionId = null;
+                    });
                 },
 
                 rejectMission(mission) {
-                        axios.post(`/missions/${mission.id}/change-status`, {
+                    this.loadingMissionId = mission.id;
+                    axios.post(`/missions/${mission.id}/change-status`, {
                         status: 'rejected'
                     })
                     .then(response => {
@@ -139,11 +157,14 @@
                     })
                     .catch(error => {
                         console.log(error);
+                    })
+                    .finally(() => {
+                        this.loadingMissionId = null;
                     });
-
                 },
 
                 reviewMission(mission) {
+                    this.loadingMissionId = mission.id;
                     axios.post(`/missions/${mission.id}/change-status`, {
                         status: 'for review'
                     })
@@ -153,6 +174,9 @@
                     })
                     .catch(error => {
                         console.log(error);
+                    })
+                    .finally(() => {
+                        this.loadingMissionId = null;
                     });
                 }
             };
