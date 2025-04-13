@@ -71,7 +71,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             required
             autofocus
             autocomplete="name"
-            :placeholder="__('Full name')"
+            :placeholder="__('name in Arabic')"
         />
 
         <!-- Civil ID -->

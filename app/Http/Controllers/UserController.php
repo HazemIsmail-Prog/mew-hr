@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Department;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
@@ -30,11 +31,11 @@ class UserController extends Controller
         return view('pages.users.index', compact('departments', 'supervisors'));
     }
 
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         abort_if(!request()->user()->can('create', User::class), 403);
         // Create the user
-        $user = User::factory()->create();
+        $user = User::create($request->validated());
         
         $signaturePath = $this->saveSignatureAndReturnItsFullPath($request->signature, $user);
         if($signaturePath){
@@ -96,8 +97,8 @@ class UserController extends Controller
     {
         abort_if(!request()->user()->can('delete', $user), 403);
         // Delete the signature file if it exists
-        if ($user->signature && file_exists(public_path($user->signature))) {
-            unlink(public_path($user->signature));
+        if ($user->signature) {
+            Storage::disk('signatures')->delete($user->getRawOriginal('signature'));
         }
         $user->delete();
         return response()->json(['message' => 'User deleted successfully']);

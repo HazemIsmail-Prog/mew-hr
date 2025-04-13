@@ -20,9 +20,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'ادارة تصميم مشاريع الشبكات والمنشآت المائية',
         ]);
 
-        User::factory()->create([
+        User::create([
             'name' => 'حازم محمد اسماعيل',
-            'email' => 'hazem.ismail@hotmail.com',
             'role' => 'admin',
             'cid' => '282102800373',
             'file_number' => '000000',

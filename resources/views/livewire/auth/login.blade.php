@@ -87,7 +87,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             type="number"
             required
             autofocus
-            autocomplete="cid"
+            autocomplete="username"
         />
 
         <!-- Password -->

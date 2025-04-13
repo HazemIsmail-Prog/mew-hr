@@ -69,7 +69,7 @@ new class extends Component {
             <!-- Display existing signature if available -->
             <div x-show="currentSignature" class="mb-2">
                 <p class="text-sm text-gray-500 dark:text-gray-300 mb-2">{{__('Current signature')}}:</p>
-                <img  width="400" height="200" x-bind:src="currentSignature" alt="User signature" class="border border-gray-200 dark:border-gray-600 rounded dark:bg-gray-800">
+                <img  width="400" height="200" x-bind:src="currentSignature" alt="User signature" class="border border-gray-500 dark:border-gray-600 rounded dark:bg-gray-800">
                 <div class="mt-2">
                     <flux:button variant="filled" x-on:click="showSignatureCanvas = true; initializeSignatureCanvas()">{{ __('Change Signature') }}</flux:button>
                 </div>
@@ -79,7 +79,7 @@ new class extends Component {
             <div x-cloak x-show="!currentSignature || showSignatureCanvas">
                 <flux:subheading size="sm" class="dark:text-gray-300 mb-2">{{__('Draw your signature below')}}</flux:subheading>
                 <div class="w-full overflow-x-auto">
-                    <canvas id="signatureCanvas" width="400" height="200" class="border border-dashed border-gray-200 dark:border-gray-600 rounded dark:bg-gray-800" style="max-width: 100%;"></canvas>
+                    <canvas id="signatureCanvas" width="400" height="200" class="border border-dashed border-gray-500 dark:border-gray-600 rounded dark:bg-gray-800" style="max-width: 100%;"></canvas>
                 </div>   
                 <div class="flex justify-start space-x-2 mt-2">
                     <flux:button x-cloak x-show="hasDrawing" variant="primary" type="submit">{{ __('Save') }}</flux:button>
