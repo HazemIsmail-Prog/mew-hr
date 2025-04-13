@@ -7,7 +7,7 @@
         </div>
 
         <template x-if="permissions.length > 0">
-            <div class="space-y-4">
+            <div class="space-y-4 pb-5">
                 <template x-for="permission in permissions" :key="permission.id">
                     <div class="flex flex-col lg:flex-row items-start lg:items-center gap-4 p-4 border rounded-lg dark:border-gray-700">
                         <div class="flex-1 flex flex-col lg:flex-row lg:items-center gap-4">
@@ -61,12 +61,12 @@
             </div>
         </template>
         <!-- non flux Pagination with top shadow -->
-        <div x-cloak x-show="meta.last_page > 1" class="flex items-center justify-end gap-2 fixed bottom-0 end-0 start-0 p-4 shadow-md dark:shadow-gray-900">
-            <flux:button class="select-none dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600" x-bind:disabled="currentPage == 1" x-on:click="goToPage(currentPage - 1)">{{__('Previous')}}</flux:button>
+        <div x-cloak x-show="meta.last_page > 1" class="flex bg-zinc-50 dark:bg-zinc-900 items-center justify-end gap-2 fixed bottom-0 end-0 start-0 p-2">
+            <flux:button class="select-none dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600" size="sm" x-bind:disabled="currentPage == 1" x-on:click="goToPage(currentPage - 1)">{{__('Previous')}}</flux:button>
             <template x-for="link in links" :key="link.label">
-                <flux:button class="select-none !hidden lg:!block dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600" x-bind:disabled="currentPage == link.label" x-on:click="goToPage(link.label)" x-html="link.label"></flux:button>
+                <flux:button class="select-none !hidden lg:!block dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600" size="sm" x-bind:disabled="currentPage == link.label" x-on:click="goToPage(link.label)" x-html="link.label"></flux:button>
             </template>
-            <flux:button class="select-none dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600" x-bind:disabled="currentPage == meta.last_page" x-on:click="goToPage(currentPage + 1)">{{__('Next')}}</flux:button>
+            <flux:button class="select-none dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600" size="sm" x-bind:disabled="currentPage == meta.last_page" x-on:click="goToPage(currentPage + 1)">{{__('Next')}}</flux:button>
         </div>
 
         <flux:modal variant="flyout" name="permission-form" focusable class="w-full md:w-1/3">
