@@ -57,13 +57,13 @@
                         
                         <!-- Regular buttons that show when no status change is in progress -->
                         <div x-show="loadingPermissionId !== permission.id" class="flex gap-2 w-full lg:w-auto">
-                            <flux:button x-show="permission.status !== 'approved'" variant="primary" x-on:click="approvePermission(permission)" title="{{__('Approve')}}">
+                            <flux:button x-show="permission.status !== 'approved'" variant="primary" x-on:click="changeStatus(permission, 'approved')" title="{{__('Approve')}}">
                                 {{__('Approve')}}
                             </flux:button>
-                            <flux:button x-show="permission.status !== 'rejected'" variant="danger" x-on:click="rejectPermission(permission)" title="{{__('Reject')}}">
+                            <flux:button x-show="permission.status !== 'rejected'" variant="danger" x-on:click="changeStatus(permission, 'rejected')" title="{{__('Reject')}}">
                                 {{__('Reject')}}
                             </flux:button>
-                            <flux:button x-show="permission.status !== 'for review'" variant="filled" x-on:click="reviewPermission(permission)" title="{{__('Review')}}">
+                            <flux:button x-show="permission.status !== 'for review'" variant="filled" x-on:click="changeStatus(permission, 'for review')" title="{{__('Review')}}">
                                 {{__('Review')}}
                             </flux:button>
                         </div>
@@ -129,10 +129,10 @@ function permissionsComponent() {
             this.getPermissions();
         },
 
-        approvePermission(permission) {
+        changeStatus(permission, status) {
             this.loadingPermissionId = permission.id;
             axios.post(`/permissions/${permission.id}/change-status`, {
-                status: 'approved'
+                status: status
             })
             .then(response => {
                 this.getPermissions();
@@ -145,40 +145,6 @@ function permissionsComponent() {
                 this.loadingPermissionId = null;
             });
         },
-
-        rejectPermission(permission) {
-            this.loadingPermissionId = permission.id;
-            axios.post(`/permissions/${permission.id}/change-status`, {
-                status: 'rejected'
-            })
-            .then(response => {
-                this.getPermissions();
-                this.$dispatch('refresh-counters');
-            })
-            .catch(error => {
-                console.log(error);
-            })
-            .finally(() => {
-                this.loadingPermissionId = null;
-            });
-        },
-
-        reviewPermission(permission) {
-            this.loadingPermissionId = permission.id;
-            axios.post(`/permissions/${permission.id}/change-status`, {
-                status: 'for review'
-            })
-            .then(response => {
-                this.getPermissions();
-                this.$dispatch('refresh-counters');
-            })
-            .catch(error => {
-                console.log(error);
-            })
-            .finally(() => {
-                this.loadingPermissionId = null;
-            });
-        }
     };
 }
 </script>

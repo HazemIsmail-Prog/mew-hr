@@ -57,13 +57,13 @@
                             
                             <!-- Regular buttons that show when no status change is in progress -->
                             <div x-show="loadingMissionId !== mission.id" class="flex gap-2 w-full lg:w-auto">
-                                <flux:button x-show="mission.status !== 'approved'" variant="primary" x-on:click="approveMission(mission)" title="{{__('Approve')}}">
+                                <flux:button x-show="mission.status !== 'approved'" variant="primary" x-on:click="changeStatus(mission, 'approved')" title="{{__('Approve')}}">
                                     {{__('Approve')}}
                                 </flux:button>
-                                <flux:button x-show="mission.status !== 'rejected'" variant="danger" x-on:click="rejectMission(mission)" title="{{__('Reject')}}">
+                                <flux:button x-show="mission.status !== 'rejected'" variant="danger" x-on:click="changeStatus(mission, 'rejected')" title="{{__('Reject')}}">
                                     {{__('Reject')}}
                                 </flux:button>
-                                <flux:button x-show="mission.status !== 'for review'" variant="filled" x-on:click="reviewMission(mission)" title="{{__('Review')}}">
+                                <flux:button x-show="mission.status !== 'for review'" variant="filled" x-on:click="changeStatus(mission, 'for review')" title="{{__('Review')}}">
                                     {{__('Review')}}
                                 </flux:button>
                             </div>
@@ -129,10 +129,10 @@
                     this.getMissions();
                 },
 
-                approveMission(mission) {
+                changeStatus(mission, status) {
                     this.loadingMissionId = mission.id;
                     axios.post(`/missions/${mission.id}/change-status`, {
-                        status: 'approved'
+                        status: status
                     })
                     .then(response => {
                         this.getMissions();
@@ -145,40 +145,6 @@
                         this.loadingMissionId = null;
                     });
                 },
-
-                rejectMission(mission) {
-                    this.loadingMissionId = mission.id;
-                    axios.post(`/missions/${mission.id}/change-status`, {
-                        status: 'rejected'
-                    })
-                    .then(response => {
-                        this.getMissions();
-                        this.$dispatch('refresh-counters');
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
-                    .finally(() => {
-                        this.loadingMissionId = null;
-                    });
-                },
-
-                reviewMission(mission) {
-                    this.loadingMissionId = mission.id;
-                    axios.post(`/missions/${mission.id}/change-status`, {
-                        status: 'for review'
-                    })
-                    .then(response => {
-                        this.getMissions();
-                        this.$dispatch('refresh-counters');
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
-                    .finally(() => {
-                        this.loadingMissionId = null;
-                    });
-                }
             };
         }
     </script>
