@@ -52,18 +52,12 @@ Route::middleware(['auth'])->group(function () {
     ->name('missions.changeStatus')
     ->middleware(['signature']);
 
-    Route::get('missions/{mission}/pdf', [MissionController::class, 'pdf'])
-    ->middleware(['signature']);
-
     Route::apiResource('missions', MissionController::class)
     ->middleware(['signature']);
 
     // Permissions
     Route::post('permissions/{permission}/change-status', [PermissionController::class, 'changeStatus'])
     ->name('permissions.changeStatus')
-    ->middleware(['signature']);
-
-    Route::get('permissions/{permission}/pdf', [PermissionController::class, 'pdf'])
     ->middleware(['signature']);
 
     Route::apiResource('permissions', PermissionController::class)

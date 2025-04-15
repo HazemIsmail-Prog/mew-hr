@@ -81,7 +81,7 @@ class MissionController extends Controller
         return new MissionResource($mission);
     }
 
-    public function pdf(Mission $mission)
+    public function show(Mission $mission)
     {
         abort_if(!request()->user()->can('view', $mission), 403);
         // // Get the signature image as base64

@@ -103,7 +103,7 @@ class PermissionController extends Controller
         return new PermissionResource($permission);
     }
 
-    public function pdf(Permission $permission)
+    public function show(Permission $permission)
     {
         abort_if(!request()->user()->can('view', $permission), 403);
         // // Get the signature image as base64
