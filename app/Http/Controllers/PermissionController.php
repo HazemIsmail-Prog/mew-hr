@@ -114,9 +114,12 @@ class PermissionController extends Controller
         }
 
         $managerSignatureBase64 = null;
+        $managerStampBase64 = null;
         if ($permission->approved_by) {
             $managerSignaturePath = Storage::disk('signatures')->path($permission->approvedByUser->getRawOriginal('signature'));
             $managerSignatureBase64 = base64_encode(file_get_contents($managerSignaturePath));
+            $managerStampPath = Storage::disk('stamps')->path('stamp.png');
+            $managerStampBase64 = base64_encode(file_get_contents($managerStampPath));
         }
 
         $data = [
@@ -125,6 +128,7 @@ class PermissionController extends Controller
             'permission' => $permission,
             'employeeSignatureBase64' => $employeeSignatureBase64,
             'managerSignatureBase64' => $managerSignatureBase64,
+            'managerStampBase64' => $managerStampBase64,
         ];
 
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();

@@ -116,6 +116,14 @@
             width: 300px;
             height: 150px;
         }
+        .manager-stamp {
+            position: absolute;
+            bottom: 160px;
+            left: 125px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 200px;
+        }
 
     </style>
 </head>
@@ -134,6 +142,9 @@
     @if($managerSignatureBase64)
         <div class="manager-signature">
             <img  class="manager-signature" src="data:image/png;base64,{{ $managerSignatureBase64 }}" alt="توقيع المستخدم" class="signature-image">
+        </div>  
+        <div class="manager-stamp">
+            <img  class="manager-stamp" src="data:image/png;base64,{{ $managerStampBase64 }}" alt="توقيع المستخدم" class="signature-image">
         </div>  
     @endif
 </body>

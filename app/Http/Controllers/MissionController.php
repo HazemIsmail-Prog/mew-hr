@@ -92,9 +92,12 @@ class MissionController extends Controller
         }
 
         $managerSignatureBase64 = null;
+        $managerStampBase64 = null;
         if ($mission->approved_by) {
             $managerSignaturePath = Storage::disk('signatures')->path($mission->approvedByUser->getRawOriginal('signature'));
             $managerSignatureBase64 = base64_encode(file_get_contents($managerSignaturePath));
+            $managerStampPath = Storage::disk('stamps')->path('stamp.png');
+            $managerStampBase64 = base64_encode(file_get_contents($managerStampPath));
         }
 
 
@@ -110,6 +113,7 @@ class MissionController extends Controller
             'mission' => $mission,
             'employeeSignatureBase64' => $employeeSignatureBase64,
             'managerSignatureBase64' => $managerSignatureBase64,
+            'managerStampBase64' => $managerStampBase64,
         ];
 
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
