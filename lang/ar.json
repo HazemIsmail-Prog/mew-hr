@@ -114,5 +114,21 @@
     "Something went wrong, please refresh the page": "حدث خطأ، يرجى تحديث الصفحة",
     "Change Signature": "تعديل التوقيع",
     "Signature should be added to start using the app": "يجب اضافة التوقيع للبدء باستخدام التطبيق",
-    "Processing...": "جاري تنفيذ الاجراء..."
+    "Processing...": "جاري تنفيذ الاجراء...",
+    "Approved Missions in": "عدد التكاليف المعتمدة في",
+    "Approved Permissions in": "عدد الاذونات المعتمدة في",
+    "January": "يناير",
+    "February": "فبراير",
+    "March": "مارس",
+    "April": "أبريل",
+    "May": "مايو",
+    "June": "يونيو",
+    "July": "يوليو",
+    "August": "أغسطس",
+    "September": "سبتمبر",
+    "October": "أكتوبر",
+    "November": "نوفمبر",
+    "December": "ديسمبر",
+    "Approve Current Page": "اعتماد الصفحة الحالية"
+
 }

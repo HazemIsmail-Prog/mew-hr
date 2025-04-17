@@ -81,6 +81,20 @@ class MissionController extends Controller
         return new MissionResource($mission);
     }
 
+    public function massApprove(Request $request)
+    {
+        $missions = Mission::whereIn('id', $request->missions)->get();
+        foreach ($missions as $mission) {
+            $mission->status = 'approved';
+            $mission->approved_at = now();
+            $mission->approved_by = auth()->id();
+            $mission->rejected_at = null;
+            $mission->rejected_by = null;
+            $mission->save();
+        }
+        return response()->json(['message' => 'Missions approved successfully']);
+    }
+
     public function show(Mission $mission)
     {
         abort_if(!request()->user()->can('view', $mission), 403);

@@ -103,6 +103,20 @@ class PermissionController extends Controller
         return new PermissionResource($permission);
     }
 
+    public function massApprove(Request $request)
+    {
+        $permissions = Permission::whereIn('id', $request->permissions)->get();
+        foreach ($permissions as $permission) {
+            $permission->status = 'approved';
+            $permission->approved_at = now();
+            $permission->approved_by = auth()->id();
+            $permission->rejected_at = null;
+            $permission->rejected_by = null;
+            $permission->save();
+        }
+        return response()->json(['message' => 'Permissions approved successfully']);
+    }
+
     public function show(Permission $permission)
     {
         abort_if(!request()->user()->can('view', $permission), 403);

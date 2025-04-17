@@ -52,12 +52,20 @@ Route::middleware(['auth'])->group(function () {
     ->name('missions.changeStatus')
     ->middleware(['signature']);
 
+    Route::post('missions/mass-approve', [MissionController::class, 'massApprove'])
+    ->name('missions.massApprove')
+    ->middleware(['signature']);
+
     Route::apiResource('missions', MissionController::class)
     ->middleware(['signature']);
 
     // Permissions
     Route::post('permissions/{permission}/change-status', [PermissionController::class, 'changeStatus'])
     ->name('permissions.changeStatus')
+    ->middleware(['signature']);
+
+    Route::post('permissions/mass-approve', [PermissionController::class, 'massApprove'])
+    ->name('permissions.massApprove')
     ->middleware(['signature']);
 
     Route::apiResource('permissions', PermissionController::class)
