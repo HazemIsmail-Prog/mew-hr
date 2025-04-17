@@ -88,7 +88,7 @@
                 <flux:input x-model="form.date" :label="__('Date')" type="date" />
                 <flux:input x-model="form.reason" :label="__('Reason')" type="text" />
                 <flux:input x-model="form.notes" :label="__('Notes')" type="text" />
-
+                <p class="text-sm text-red-500 dark:text-red-400 mt-2">{{__('in case of multipule days mission paper should be provided')}}</p>
                 <div class="flex justify-end space-x-2">
                     <flux:modal.close>
                         <flux:button variant="filled">{{ __('Cancel') }}</flux:button>
