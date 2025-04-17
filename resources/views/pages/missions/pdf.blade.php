@@ -140,8 +140,8 @@
 </head>
 <body>
     <div class="reason">{{$mission->reason}}</div>
-    <div class="start-date">{{$mission->start_date->format('d/m/Y')}}</div>
-    <div class="end-date">{{$mission->end_date->format('d/m/Y')}}</div>
+    <div class="start-date">{{$mission->date->format('d/m/Y')}}</div>
+    <div class="end-date">{{$mission->date->format('d/m/Y')}}</div>
     <div class="name">{{$mission->user->name}}</div>
     <div class="cid">{{$mission->user->cid}}</div>
     <div class="file-number">{{$mission->user->file_number}}</div>

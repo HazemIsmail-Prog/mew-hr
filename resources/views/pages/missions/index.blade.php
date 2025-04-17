@@ -12,7 +12,7 @@
                     <div class="flex flex-col lg:flex-row items-start lg:items-center gap-4 p-4 border rounded-lg dark:border-gray-700">
                         <div class="flex-1 flex flex-col lg:flex-row lg:items-center gap-4">
                             <div class="flex-1">
-                                <div class="text-sm font-medium dark:text-gray-200" x-text="mission.start_date + ' - ' + mission.end_date"></div>
+                                <div class="text-sm font-medium dark:text-gray-200" x-text="mission.date"></div>
                                 <div class="text-sm text-gray-600 dark:text-gray-400" x-text="mission.reason"></div>
                                 <div x-show="mission.notes" class="text-sm text-gray-500 dark:text-gray-400" x-text="mission.notes"></div>
                             </div>
@@ -85,8 +85,7 @@
                     <option :selected="form.direction == 'out'" value="out">{{__('Out')}}</option>
                     <option :selected="form.direction == 'in-out'" value="in-out">{{__('In & Out')}}</option>
                 </flux:select>
-                <flux:input x-model="form.start_date" :label="__('Start Date')" type="date" />
-                <flux:input x-model="form.end_date" :label="__('End Date')" type="date" />
+                <flux:input x-model="form.date" :label="__('Date')" type="date" />
                 <flux:input x-model="form.reason" :label="__('Reason')" type="text" />
                 <flux:input x-model="form.notes" :label="__('Notes')" type="text" />
 
@@ -181,8 +180,7 @@
                 getEmptyForm() {
                     return {
                         direction: '',
-                        start_date: '',
-                        end_date: '',
+                        date: '',
                         reason: '',
                         notes: ''
                     };

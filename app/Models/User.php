@@ -70,6 +70,11 @@ class User extends Authenticatable
         return $value ? asset('storage/signatures/' . $value) : null;
     }
 
+    public function getStampAttribute($value)
+    {
+        return $value ? asset('storage/stamps/' . $value) : null;
+    }
+
     public function department()
     {
         return $this->belongsTo(Department::class);

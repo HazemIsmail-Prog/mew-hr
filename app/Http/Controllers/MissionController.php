@@ -101,11 +101,8 @@ class MissionController extends Controller
         }
 
 
-        if($mission->start_date->format('d-m-Y') === $mission->end_date->format('d-m-Y')){
-            $title = 'تكليف' . ' ' . __($mission->direction) . ' بتاريخ ' . $mission->start_date->format('d-m-Y');
-        }else{
-            $title = 'تكليف' . ' ' . __($mission->direction) . ' من ' . $mission->start_date->format('d-m-Y') . ' إلى ' . $mission->end_date->format('d-m-Y');
-        }
+        $title = 'تكليف' . ' ' . __($mission->direction) . ' بتاريخ ' . $mission->date->format('d-m-Y');
+
 
         $data = [
             'title' => $title,

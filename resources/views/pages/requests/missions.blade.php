@@ -23,7 +23,7 @@
                         <div class="flex-1 flex flex-col lg:flex-row lg:items-center gap-4">
                             <div class="flex-1">
                                 <h1 x-text="mission.user.name"></h1>
-                                <div class="text-sm font-medium dark:text-gray-200" x-text="mission.start_date + ' - ' + mission.end_date"></div>
+                                <div class="text-sm font-medium dark:text-gray-200" x-text="mission.date"></div>
                                 <div class="text-sm text-gray-600 dark:text-gray-400" x-text="mission.reason"></div>
                                 <div x-show="mission.notes" class="text-sm text-gray-500 dark:text-gray-400" x-text="mission.notes"></div>
                                 <span x-show="mission.direction" class="px-2 py-1 text-xs font-medium rounded-full" 

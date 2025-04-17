@@ -22,8 +22,7 @@ class StoreMissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'date' => 'required|date',
             'reason' => 'required|string',
             'direction' => 'required|string',
             'notes' => 'nullable|string',
