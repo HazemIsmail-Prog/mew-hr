@@ -130,6 +130,11 @@
     "October": "أكتوبر",
     "November": "نوفمبر",
     "December": "ديسمبر",
-    "Approve Current Page": "اعتماد الصفحة الحالية"
-
+    "Approve Current Page": "اعتماد الصفحة الحالية",
+    "Stamp": "الختم",
+    "Stamp should be added to start using the app": "يجب اضافة الختم للبدء باستخدام التطبيق",
+    "Current stamp": "الختم الحالي",
+    "Change Stamp": "تعديل الختم",
+    "Uploading": "جاري الرفع",
+    "Add Stamp": "اضافة ختم"
 }

@@ -110,7 +110,7 @@ class MissionController extends Controller
         if ($mission->approved_by) {
             $managerSignaturePath = Storage::disk('signatures')->path($mission->approvedByUser->getRawOriginal('signature'));
             $managerSignatureBase64 = base64_encode(file_get_contents($managerSignaturePath));
-            $managerStampPath = Storage::disk('stamps')->path('stamp.png');
+            $managerStampPath = Storage::disk('stamps')->path($mission->approvedByUser->getRawOriginal('stamp'));
             $managerStampBase64 = base64_encode(file_get_contents($managerStampPath));
         }
 

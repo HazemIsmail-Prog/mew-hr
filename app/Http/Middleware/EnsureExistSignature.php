@@ -18,6 +18,9 @@ class EnsureExistSignature
         if (!$request->user()->signature) {
             return redirect()->route('settings.signature');
         }
+        if (!$request->user()->stamp && $request->user()->role == 'supervisor') {
+            return redirect()->route('settings.stamp');
+        }
         return $next($request);
     }
 }
