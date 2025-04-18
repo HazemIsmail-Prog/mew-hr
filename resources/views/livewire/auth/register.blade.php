@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
-
+use Livewire\Attributes\Computed;
 new #[Layout('components.layouts.auth')] class extends Component {
     public $department_id = '';
     public $supervisor_id = '';
@@ -20,8 +20,6 @@ new #[Layout('components.layouts.auth')] class extends Component {
     public string $cid = '';
     public string $role = '';
     public string $file_number = '';
-    public $departments;
-    public $supervisors;
     /**
      * Handle an incoming registration request.
      */
@@ -32,11 +30,11 @@ new #[Layout('components.layouts.auth')] class extends Component {
             'cid' => ['required', 'string', 'max:12', 'min:12', 'unique:' . User::class],
             'file_number' => ['required', 'string', 'max:12', 'unique:' . User::class],
             'department_id' => ['required', 'numeric', 'exists:departments,id'],
-            'supervisor_id' => ['required_if:role,employee', 'exists:users,id'],
-            'role' => ['required', 'string', 'max:255'],
+            'supervisor_id' => ['nullable', 'required_if:role,employee', 'exists:users,id'],
+            'role' => ['required', 'string', 'max:255', 'in:supervisor,employee'],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
-
+        
         $validated['password'] = Hash::make($validated['password']);
         if ($validated['role'] == 'supervisor') {
             $validated['supervisor_id'] = null;
@@ -49,10 +47,17 @@ new #[Layout('components.layouts.auth')] class extends Component {
         $this->redirectIntended(route('dashboard', absolute: false), navigate: true);
     }
 
-    public function mount()
-    {
-        $this->departments = Department::all();
-        $this->supervisors = User::where('role', 'supervisor')->get()->pluck('name','id');
+    public function updatedDepartmentId(){
+        $this->supervisor_id = null;
+    }
+
+    #[Computed()]
+    public function departments(){
+        return Department::all();
+    }
+    #[Computed()]
+    public function supervisors(){
+        return User::where('role', 'supervisor')->where('department_id', $this->department_id)->get(['id','name']);
     }
 }; ?>
 
@@ -95,11 +100,11 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
                 <!-- Department -->
         <flux:select
-            wire:model.number="department_id"
+            wire:model.live="department_id"
             :label="__('Department')"
         >
             <option value="">{{ __('Select Department') }}</option>
-            @foreach ($departments as $department)
+            @foreach ($this->departments as $department)
                 <option value="{{ $department->id }}">{{ $department->name }}</option>
             @endforeach
         </flux:select>
@@ -116,15 +121,15 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
 
 
-        @if ($role == 'employee')
+        @if ($role == 'employee' && $department_id)
             <!-- Supervisor -->
             <flux:select
                 wire:model="supervisor_id"
             :label="__('Supervisor')"
         >
             <option value="">{{ __('Select Supervisor') }}</option>
-            @foreach ($supervisors as $id => $name)
-                <option value="{{ $id }}">{{ $name }}</option>
+            @foreach ($this->supervisors as $supervisor)
+                <option value="{{ $supervisor->id }}">{{ $supervisor->name }}</option>
             @endforeach
             </flux:select>
         @endif
