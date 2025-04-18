@@ -12,7 +12,7 @@ new class extends Component {
     public $newStamp;
     public function mount()
     {
-        
+        abort_if(auth()->user()->role != 'supervisor', 403);
         $this->user = auth()->user();
         $this->currentStamp = $this->user->stamp;
     }

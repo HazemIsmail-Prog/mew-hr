@@ -3,7 +3,9 @@
         <flux:navlist>
             <flux:navlist.item :href="route('settings.profile')" wire:navigate>{{ __('Profile') }}</flux:navlist.item>
             <flux:navlist.item :href="route('settings.signature')" wire:navigate>{{ __('Signature') }}</flux:navlist.item>
-            <flux:navlist.item :href="route('settings.stamp')" wire:navigate>{{ __('Stamp') }}</flux:navlist.item>
+            @if(auth()->user()->role == 'supervisor')
+                <flux:navlist.item :href="route('settings.stamp')" wire:navigate>{{ __('Stamp') }}</flux:navlist.item>
+            @endif
             <flux:navlist.item :href="route('settings.password')" wire:navigate>{{ __('Password') }}</flux:navlist.item>
             <flux:navlist.item :href="route('settings.appearance')" wire:navigate>{{ __('Appearance') }}</flux:navlist.item>
         </flux:navlist>
