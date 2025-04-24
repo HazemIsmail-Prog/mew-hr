@@ -49,6 +49,36 @@
             font-size: 18px;
             font-weight: bold;
         }
+        .direction-title {
+            color:black;
+            position: absolute;
+            width: 65px;
+            top: 215px;
+            right: 405px;
+            text-align: right;
+            font-size: 19px;
+            font-weight: bold;
+        }
+        .direction-description {
+            color:black;
+            position: absolute;
+            width: 101px;
+            top: 371px;
+            right: 237px;
+            text-align: right;
+            font-size: 17px;
+            font-weight: bold;
+        }
+        .direction {
+            color:black;
+            position: absolute;
+            width: 65px;
+            top: 413px;
+            right: 283px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
         .time {
             position: absolute;
             width: 65px;
@@ -129,6 +159,9 @@
 </head>
 <body>
     <div class="duration">{{$permission->duration}}</div>
+    <div class="direction-title">{{$permission->type == 'in' ? 'حضور' : 'انصراف'}}</div>
+    <div class="direction-description">{{$permission->type == 'in' ? 'بالحضــور الى' : 'بالانصراف من'}}</div>
+    <div class="direction">{{$permission->type == 'in' ? 'الدخول' : 'الخروج'}}</div>
     <div class="time">{{$permission->time->format('H:i')}}</div>
     <div class="reason">{{$permission->reason}}</div>
     <div class="day">{{$permission->date->translatedFormat('l', 'ar')}}</div>

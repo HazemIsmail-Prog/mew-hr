@@ -171,11 +171,8 @@ class PermissionController extends Controller
             'default_font' => 'cairo',
         ]);
 
-        if($permission->type == 'in'){
-            $mpdf->SetWatermarkImage(public_path('images/p-in.jpg'));
-        }else{
-            $mpdf->SetWatermarkImage(public_path('images/p-out.jpg'));
-        }
+        $mpdf->SetWatermarkImage(public_path('images/permission.jpg'));
+
 
         $mpdf->watermarkImgBehind = true;
         $mpdf->showWatermarkImage = true;
@@ -184,6 +181,6 @@ class PermissionController extends Controller
         $mpdf->SetProtection(['copy', 'print'], '', 'pass');
         $mpdf->WriteHTML(view('pages.permissions.pdf', $data)->render());
         // download the pdf
-        return $mpdf->Output($data['title'].'.pdf', 'D');
+        return $mpdf->Output($data['title'].'.pdf', 'D');   // I for inline, D for download
     }
 }
