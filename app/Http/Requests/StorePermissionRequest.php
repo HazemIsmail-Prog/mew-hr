@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Rules\PermissionValidation;
 class StorePermissionRequest extends FormRequest
 {
     /**
@@ -22,7 +22,7 @@ class StorePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => 'required|date',
+            'date' => ['required', 'date', new PermissionValidation],
             'time' => 'required|date_format:H:i',
             'reason' => 'required|string',
             'duration' => 'required|string',

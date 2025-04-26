@@ -19,7 +19,7 @@ class PermissionResource extends JsonResource
             'user_id' => $this->user_id,
             'user' => new UserResource($this->whenLoaded('user')),
             'date' => $this->date->format('Y-m-d'),
-            'approved_permissions_count' => $this->getApprovedPermissionsCount($this->user_id, $this->date),
+            'approved_permissions_count' => $this->user->monthlyPermissionsCount(date:$this->date, status:'approved'),
             'translated_approved_permissions_count' => __('Approved Permissions in') . ' ' . __($this->date->format('F')) . ' ' . __($this->date->format('Y')),
             'time' => $this->time->format('H:i'),
             'reason' => $this->reason,
@@ -38,9 +38,5 @@ class PermissionResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
-    }
-    private function getApprovedPermissionsCount($user_id, $date)
-    {
-        return Permission::where('user_id', $user_id)->where('status', 'approved')->whereMonth('date', $date->month)->whereYear('date', $date->year)->count();
     }
 } 

@@ -4,6 +4,7 @@
     use App\Models\Mission;
     use App\Models\Permission;
     use App\Models\Request;
+    use App\Models\Exemption;
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}" class="dark">
@@ -33,10 +34,55 @@
                     @can('viewAny', Permission::class)
                         <flux:navlist.item icon="users" :href="route('permissions.index')" :current="request()->routeIs('permissions.*')" wire:navigate>{{ __('Permissions') }}</flux:navlist.item>
                     @endcan
-                    @can('viewAny', Request::class)
-                        <flux:navlist.item icon="users" :href="route('requests.index')" :current="request()->routeIs('requests.*')" wire:navigate>{{ __('Requests') }}</flux:navlist.item>
+                    @can('viewAny', Exemption::class)
+                        <!-- <flux:navlist.item icon="users" :href="route('exemptions.index')" :current="request()->routeIs('exemptions.*')" wire:navigate>{{ __('Exemptions') }}</flux:navlist.item> -->
                     @endcan
+
                 </flux:navlist.group>
+                @can('viewAny', Request::class)
+                <flux:navlist.group
+                    heading="{{ __('Requests') }}"
+                    x-data="{
+                        pendingMissions: 0,
+                        pendingPermissions: 0, 
+                        pendingExemptions: 0,
+                        init() {
+                            this.fetchCounts();
+                            document.addEventListener('requests-updated', () => {
+                                this.fetchCounts();
+                            });
+                        },
+                        fetchCounts() {
+                            axios.get('/requests/counts')
+                                .then(response => {
+                                    this.pendingMissions = response.data.missionsCount;
+                                    this.pendingPermissions = response.data.permissionsCount;
+                                    this.pendingExemptions = response.data.exemptionsCount;
+                                })
+                                .catch(error => console.error('Error fetching counts:', error));
+                        }
+                    }"
+                >
+                    <flux:navlist.item icon="users" :href="route('requests.missions')" :current="request()->routeIs('requests.missions')" wire:navigate>
+                        <div class="flex items-center justify-between gap-2">
+                            {{ __('Missions') }}
+                            <flux:badge x-show="pendingMissions > 0" color="red" size="sm" class="!text-xs !font-medium !px-1 !py-0.5" x-text="pendingMissions"></flux:badge>
+                        </div>
+                    </flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('requests.permissions')" :current="request()->routeIs('requests.permissions')" wire:navigate>
+                        <div class="flex items-center justify-between gap-2">
+                            {{ __('Permissions') }}
+                            <flux:badge x-show="pendingPermissions > 0" color="red" size="sm" class="!text-xs !font-medium !px-1 !py-0.5" x-text="pendingPermissions"></flux:badge>
+                        </div>
+                    </flux:navlist.item>
+                    <!-- <flux:navlist.item icon="users" :href="route('requests.exemptions')" :current="request()->routeIs('requests.exemptions')" wire:navigate>
+                        <div class="flex items-center justify-between gap-2">
+                            {{ __('Exemptions') }}
+                            <flux:badge x-show="pendingExemptions > 0" color="red" size="sm" class="!text-xs !font-medium !px-1 !py-0.5" x-text="pendingExemptions"></flux:badge>
+                        </div>
+                    </flux:navlist.item> -->
+                </flux:navlist.group>
+                @endcan
             </flux:navlist>
 
             <flux:spacer />

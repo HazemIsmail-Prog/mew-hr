@@ -35,7 +35,7 @@ class PermissionController extends Controller
                 ->when($request->date_to, function($query, $date_to) {
                     return $query->where('date', '<=', $date_to);
                 })
-                ->latest()
+                ->latest('date')
                 ->paginate(5);
             return PermissionResource::collection($permissions);
         }

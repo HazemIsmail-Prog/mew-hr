@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\MissionValidation;
-class StoreMissionRequest extends FormRequest
+use App\Rules\ExemptionValidation;
+class StoreExemptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class StoreMissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => ['required', 'date', new MissionValidation],
+            'date' => ['required', 'date', new ExemptionValidation],
             'reason' => 'required|string',
             'direction' => 'required|string',
             'notes' => 'nullable|string',

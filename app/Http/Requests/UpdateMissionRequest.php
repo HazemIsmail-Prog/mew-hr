@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Models\Mission;
+use App\Rules\MissionValidation;
 class UpdateMissionRequest extends FormRequest
 {
     /**
@@ -21,8 +22,9 @@ class UpdateMissionRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'date' => 'required|date',
+            'date' => ['required', 'date', new MissionValidation($this->id)],
             'reason' => 'required|string',
             'direction' => 'required|string',
             'notes' => 'nullable|string',

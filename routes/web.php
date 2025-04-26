@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\MissionController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ExemptionController;
 use App\Http\Controllers\RequestController;
 use App\Models\User;
 Route::get('/', function () {
@@ -24,7 +25,7 @@ Route::get('dashboard', function () {
         return redirect()->route('users.index');
     }
     if(auth()->user()->role === 'supervisor') {
-        return redirect()->route('requests.index');
+        return redirect()->route('requests.missions');
     }
     if(auth()->user()->role === 'employee') {
         return redirect()->route('missions.index');
@@ -71,20 +72,34 @@ Route::middleware(['auth'])->group(function () {
 
     Route::apiResource('permissions', PermissionController::class)
     ->middleware(['signature']);
+
+    // Exemptions
+    Route::post('exemptions/{exemption}/change-status', [ExemptionController::class, 'changeStatus'])
+    ->name('exemptions.changeStatus')
+    ->middleware(['signature']);
+
+    Route::post('exemptions/mass-approve', [ExemptionController::class, 'massApprove'])
+    ->name('exemptions.massApprove')
+    ->middleware(['signature']);
+
+    Route::apiResource('exemptions', ExemptionController::class)
+    ->middleware(['signature']);
     
     // Requests
-    Route::get('requests/missions', [RequestController::class, 'missions'])
-    ->middleware(['signature']);
-
-    Route::get('requests/permissions', [RequestController::class, 'permissions'])
-    ->middleware(['signature']);
-
     Route::get('requests/counts', [RequestController::class, 'getCounts'])
     ->middleware(['signature']);
 
-    Route::get('requests', [RequestController::class, 'index'])
+    Route::get('requests/missions', [RequestController::class, 'missions'])
     ->middleware(['signature'])
-    ->name('requests.index');
+    ->name('requests.missions');
+
+    Route::get('requests/permissions', [RequestController::class, 'permissions'])
+    ->middleware(['signature'])
+    ->name('requests.permissions');
+
+    Route::get('requests/exemptions', [RequestController::class, 'exemptions'])
+    ->middleware(['signature'])
+    ->name('requests.exemptions');
     
 });
 

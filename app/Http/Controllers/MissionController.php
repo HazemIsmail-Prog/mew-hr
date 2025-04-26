@@ -19,7 +19,7 @@ class MissionController extends Controller
         if(request()->wantsJson()){
             $missions = Mission::query()
             ->where('user_id', auth()->id())
-            ->latest()
+            ->latest('date')
             ->paginate(5);
             return MissionResource::collection($missions);
         }

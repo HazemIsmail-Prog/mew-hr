@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Rules\PermissionValidation;
 class UpdatePermissionRequest extends FormRequest
 {
     /**
@@ -21,9 +21,10 @@ class UpdatePermissionRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'user_id' => 'required|exists:users,id',
-            'date' => 'required|date',
+            'date' => ['required', 'date', new PermissionValidation($this->id)],
             'time' => 'required|date_format:H:i',
             'reason' => 'required|string',
             'duration' => 'required|string',

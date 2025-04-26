@@ -136,5 +136,18 @@
     "Current stamp": "الختم الحالي",
     "Change Stamp": "تعديل الختم",
     "Uploading": "جاري الرفع",
-    "Add Stamp": "اضافة ختم"
+    "Add Stamp": "اضافة ختم",
+    "Exemptions": "الاعفاءات",
+    "Add Exemption": "اعفاء جديد",
+    "Edit Exemption": "تعديل الاعفاء",
+    "Edit the exemption details": "تعديل تفاصيل الاعفاء",
+    "Add a new exemption": "إضافة إعفاء جديد",
+    "in case of multipule days exemption paper should be provided": "في حالة الاعفاء لأكثر من يوم يتم طباعة النموذج يدويا واعتماده من قبل المسؤول المباشر",
+    "Exemption": "الاعفاء",
+    "Approved Exemptions in": "عدد الاعفاءات المعتمدة في",
+    "You have a previous mission for this day": "لديك تكليف مسجل لهذا اليوم",
+    "You have a previous permission for this day": "لديك اذن مسجل لهذا اليوم",
+    "You have a previous exemption for this day": "لديك اعفاء مسجل لهذا اليوم",
+    "You cannot have more than 12 missions per month": "تم تسجيل 12 تكليف لهذا الشهر، لا يمكنك تسجيل تكليف جديد",
+    "You cannot have more than 4 permissions per month": "تم تسجيل 4 اذونات لهذا الشهر، لا يمكنك تسجيل اذن جديد"
 }

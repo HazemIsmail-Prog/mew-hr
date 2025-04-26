@@ -180,7 +180,7 @@
                 getEmptyForm() {
                     return {
                         direction: '',
-                        date: '',
+                        date: new Date().toISOString().split('T')[0],
                         reason: '',
                         notes: ''
                     };

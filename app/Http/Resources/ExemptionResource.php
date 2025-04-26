@@ -4,9 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\Mission;
-
-class MissionResource extends JsonResource
+use App\Models\Exemption;
+class ExemptionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,8 +19,8 @@ class MissionResource extends JsonResource
             'user_id' => $this->user_id,
             'user' => new UserResource($this->whenLoaded('user')),
             'date' => $this->date->format('Y-m-d'),
-            'approved_missions_count' => $this->user->monthlyMissionsCount(date:$this->date, status:'approved'),
-            'translated_approved_missions_count' => __('Approved Missions in') . ' ' . __($this->date->format('F')) . ' ' . __($this->date->format('Y')),
+            'approved_exemptions_count' => $this->user->monthlyExemptionsCount(date:$this->date, status:'approved'),
+            'translated_approved_exemptions_count' => __('Approved Exemptions in') . ' ' . __($this->date->format('F')) . ' ' . __($this->date->format('Y')),
             'direction' => $this->direction,
             'translated_direction' => __($this->direction),
             'reason' => $this->reason,
@@ -38,4 +37,4 @@ class MissionResource extends JsonResource
             'updated_at' => $this->updated_at,
         ];
     }
-} 
+}
