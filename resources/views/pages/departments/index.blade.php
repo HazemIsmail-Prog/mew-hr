@@ -21,14 +21,8 @@
                 </template>
             </div>
         </template>
-        <!-- non flux Pagination with top shadow -->
-        <div x-cloak x-show="meta.last_page > 1" class="flex items-center gap-2 fixed bottom-0 right-0 p-4 shadow-md dark:shadow-gray-900">
-            <flux:button class="select-none" x-bind:disabled="currentPage == 1" x-on:click="goToPage(currentPage - 1)">{{__('Previous')}}</flux:button>
-            <template x-for="link in links" :key="link.label">
-                <flux:button class="select-none !hidden lg:!block" x-bind:disabled="currentPage == link.label" x-on:click="goToPage(link.label)" x-html="link.label"></flux:button>
-            </template>
-            <flux:button class="select-none" x-bind:disabled="currentPage == meta.last_page" x-on:click="goToPage(currentPage + 1)">{{__('Next')}}</flux:button>
-        </div>
+
+        @include('components.pagination')
 
         <flux:modal variant="flyout" name="department-form" focusable class="w-full md:w-1/3">
             <form x-on:submit.prevent="saveDepartment" class="space-y-6">
