@@ -1,17 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\MissionController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExemptionController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\MissionController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 use App\Models\User;
-Route::get('/', function () {
-    return redirect()->route('login');
-})->name('home');
+
+
+Route::redirect('/', 'login')->name('home');
 
 Route::get('/login-as-user/{id}', function ($id) {
     abort_if(auth()->user()->role !== 'admin', 403);
@@ -20,21 +21,11 @@ Route::get('/login-as-user/{id}', function ($id) {
     return redirect()->route('dashboard');
 })->name('login-as-user');
 
-Route::get('dashboard', function () {
-    if(auth()->user()->role === 'admin') {
-        return redirect()->route('users.index');
-    }
-    if(auth()->user()->role === 'supervisor') {
-        return redirect()->route('requests.missions');
-    }
-    if(auth()->user()->role === 'employee') {
-        return redirect()->route('missions.index');
-    }
-    return view('dashboard');
-})->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
+    
+    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
+
     Route::redirect('settings', 'settings/profile');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
@@ -49,57 +40,39 @@ Route::middleware(['auth'])->group(function () {
     // Users
     Route::apiResource('users', UserController::class);
 
-    // Missions
-    Route::post('missions/{mission}/change-status', [MissionController::class, 'changeStatus'])
-    ->name('missions.changeStatus')
-    ->middleware(['signature']);
 
-    Route::post('missions/mass-approve', [MissionController::class, 'massApprove'])
-    ->name('missions.massApprove')
-    ->middleware(['signature']);
+    Route::middleware(['signature'])->group(function () {
+        
+        // Missions
+        Route::controller(MissionController::class)->group(function () {
+            Route::post('missions/{mission}/change-status', 'changeStatus');
+            Route::post('missions/mass-approve', 'massApprove');
+        });
+        Route::apiResource('missions', MissionController::class);
 
-    Route::apiResource('missions', MissionController::class)
-    ->middleware(['signature']);
-
-    // Permissions
-    Route::post('permissions/{permission}/change-status', [PermissionController::class, 'changeStatus'])
-    ->name('permissions.changeStatus')
-    ->middleware(['signature']);
-
-    Route::post('permissions/mass-approve', [PermissionController::class, 'massApprove'])
-    ->name('permissions.massApprove')
-    ->middleware(['signature']);
-
-    Route::apiResource('permissions', PermissionController::class)
-    ->middleware(['signature']);
-
-    // Exemptions
-    Route::post('exemptions/{exemption}/change-status', [ExemptionController::class, 'changeStatus'])
-    ->name('exemptions.changeStatus')
-    ->middleware(['signature']);
-
-    Route::post('exemptions/mass-approve', [ExemptionController::class, 'massApprove'])
-    ->name('exemptions.massApprove')
-    ->middleware(['signature']);
-
-    Route::apiResource('exemptions', ExemptionController::class)
-    ->middleware(['signature']);
+        // Permissions
+        Route::controller(PermissionController::class)->group(function () {
+            Route::post('permissions/{permission}/change-status', 'changeStatus');
+            Route::post('permissions/mass-approve', 'massApprove');
+        });
+        Route::apiResource('permissions', PermissionController::class);
     
-    // Requests
-    Route::get('requests/counts', [RequestController::class, 'getCounts'])
-    ->middleware(['signature']);
+        // Exemptions
+        Route::controller(ExemptionController::class)->group(function () {
+            Route::post('exemptions/{exemption}/change-status', 'changeStatus');
+            Route::post('exemptions/mass-approve', 'massApprove');
+        });
+        Route::apiResource('exemptions', ExemptionController::class);
+        
+        // Requests
+        Route::controller(RequestController::class)->group(function () {
+            Route::get('requests/counts', 'getCounts');
+            Route::get('requests/missions', 'missions')->name('requests.missions');
+            Route::get('requests/permissions', 'permissions')->name('requests.permissions');
+            Route::get('requests/exemptions', 'exemptions')->name('requests.exemptions');
+        });
+    });
 
-    Route::get('requests/missions', [RequestController::class, 'missions'])
-    ->middleware(['signature'])
-    ->name('requests.missions');
-
-    Route::get('requests/permissions', [RequestController::class, 'permissions'])
-    ->middleware(['signature'])
-    ->name('requests.permissions');
-
-    Route::get('requests/exemptions', [RequestController::class, 'exemptions'])
-    ->middleware(['signature'])
-    ->name('requests.exemptions');
     
 });
 
