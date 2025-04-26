@@ -112,6 +112,7 @@
                     axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                     this.getMissions();
                     this.$watch('filters', () => {
+                        this.currentPage = 1;
                         this.getMissions();
                     });
                 },
