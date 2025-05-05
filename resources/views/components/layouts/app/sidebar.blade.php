@@ -35,7 +35,7 @@
                         <flux:navlist.item icon="users" :href="route('permissions.index')" :current="request()->routeIs('permissions.*')" wire:navigate>{{ __('Permissions') }}</flux:navlist.item>
                     @endcan
                     @can('viewAny', Exemption::class)
-                        <!-- <flux:navlist.item icon="users" :href="route('exemptions.index')" :current="request()->routeIs('exemptions.*')" wire:navigate>{{ __('Exemptions') }}</flux:navlist.item> -->
+                        <flux:navlist.item icon="users" :href="route('exemptions.index')" :current="request()->routeIs('exemptions.*')" wire:navigate>{{ __('Exemptions') }}</flux:navlist.item>
                     @endcan
 
                 </flux:navlist.group>
@@ -75,12 +75,12 @@
                             <flux:badge x-show="pendingPermissions > 0" color="red" size="sm" class="!text-xs !font-medium !px-1 !py-0.5" x-text="pendingPermissions"></flux:badge>
                         </div>
                     </flux:navlist.item>
-                    <!-- <flux:navlist.item icon="users" :href="route('requests.exemptions')" :current="request()->routeIs('requests.exemptions')" wire:navigate>
+                    <flux:navlist.item icon="users" :href="route('requests.exemptions')" :current="request()->routeIs('requests.exemptions')" wire:navigate>
                         <div class="flex items-center justify-between gap-2">
                             {{ __('Exemptions') }}
                             <flux:badge x-show="pendingExemptions > 0" color="red" size="sm" class="!text-xs !font-medium !px-1 !py-0.5" x-text="pendingExemptions"></flux:badge>
                         </div>
-                    </flux:navlist.item> -->
+                    </flux:navlist.item>
                 </flux:navlist.group>
                 @endcan
             </flux:navlist>

@@ -160,6 +160,7 @@ class ExemptionController extends Controller
         $mpdf->SetProtection(['copy', 'print'], '', 'pass');
         $mpdf->WriteHTML(view('pages.exemptions.pdf', $data)->render());
         // download the pdf
+        // return $mpdf->Output($data['title'].'.pdf', 'I');
         return $mpdf->Output($data['title'].'.pdf', 'D');
     }
 }

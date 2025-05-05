@@ -136,6 +136,33 @@
             width: 140px;
             height: 35px;
         }
+        .direction-text-in {
+            position: absolute;
+            top: 750px;
+            right: 85px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 65px;
+            height: 35px;
+        }
+        .direction-text-out {
+            position: absolute;
+            top: 750px;
+            right: 175px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 65px;
+            height: 35px;
+        }
+        .direction-text-in-out {
+            position: absolute;
+            top: 750px;
+            right: 305px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 65px;
+            height: 35px;
+        }
     </style>
 </head>
 <body>
@@ -153,6 +180,13 @@
         'direction-out' => $exemption->direction == 'out',
         'direction-in-out' => $exemption->direction == 'in-out'
         ])>
+    </div>
+    <div @class([
+        'direction-text-in' => $exemption->direction == 'in',
+        'direction-text-out' => $exemption->direction == 'out',
+        'direction-text-in-out' => $exemption->direction == 'in-out'
+        ])>
+        إعفاء
     </div>
     @if($managerSignatureBase64)
         <div class="manager-signature">
