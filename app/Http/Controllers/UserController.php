@@ -17,12 +17,14 @@ class UserController extends Controller
     public function index(Request $request)
     {
         abort_if(!request()->user()->can('viewAny', User::class), 403);
-        if(request()->wantsJson()){
+        if(request()->wantsJson()){           
             $users = User::query()
-            ->with('department')
-            ->with('supervisor')
-            ->latest()
-            ->paginate(30);
+                ->with('supervisor')
+                // ->with('department')
+                ->orderByRaw("CASE WHEN role = 'supervisor' THEN 0 ELSE 1 END")
+                ->orderBy('supervisor_id')
+                ->latest()
+                ->paginate(30);
             return UserResource::collection($users);
         }
 
