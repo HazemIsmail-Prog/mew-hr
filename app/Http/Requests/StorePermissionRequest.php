@@ -22,12 +22,19 @@ class StorePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => ['required', 'date', new PermissionValidation],
+            'date' => ['required', 'date', 'before_or_equal:today', new PermissionValidation],
             'time' => 'required|date_format:H:i',
             'reason' => 'required|string',
             'duration' => 'required|string',
             'type' => 'required|string',
             'notes' => 'nullable|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'date.before_or_equal' => __('The date must be today or less.'),
         ];
     }
 }

@@ -24,10 +24,17 @@ class UpdateMissionRequest extends FormRequest
     {
 
         return [
-            'date' => ['required', 'date', new MissionValidation($this->id)],
+            'date' => ['required', 'date', 'before_or_equal:today', new MissionValidation($this->id)],
             'reason' => 'required|string',
             'direction' => 'required|string',
             'notes' => 'nullable|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'date.before_or_equal' => __('The date must be today or less.'),
         ];
     }
 }

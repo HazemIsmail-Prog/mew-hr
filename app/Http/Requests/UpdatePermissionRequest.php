@@ -24,12 +24,19 @@ class UpdatePermissionRequest extends FormRequest
 
         return [
             'user_id' => 'required|exists:users,id',
-            'date' => ['required', 'date', new PermissionValidation($this->id)],
+            'date' => ['required', 'date', 'before_or_equal:today', new PermissionValidation($this->id)],
             'time' => 'required|date_format:H:i',
             'reason' => 'required|string',
             'duration' => 'required|string',
             'type' => 'required|string',
             'notes' => 'nullable|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'date.before_or_equal' => __('The date must be today or less.'),
         ];
     }
 }

@@ -22,10 +22,18 @@ class StoreExemptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => ['required', 'date', new ExemptionValidation],
+            // date must be today or less
+            'date' => ['required', 'date', 'before_or_equal:today', new ExemptionValidation],
             'reason' => 'required|string',
             'direction' => 'required|string',
             'notes' => 'nullable|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'date.before_or_equal' => __('The date must be today or less.'),
         ];
     }
 }
