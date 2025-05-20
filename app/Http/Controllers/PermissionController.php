@@ -36,7 +36,7 @@ class PermissionController extends Controller
                     return $query->where('date', '<=', $date_to);
                 })
                 ->latest('date')
-                ->paginate(5);
+                ->paginate(10);
             return PermissionResource::collection($permissions);
         }
         return view('pages.permissions.index');

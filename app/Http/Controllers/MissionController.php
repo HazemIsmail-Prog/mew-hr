@@ -20,7 +20,7 @@ class MissionController extends Controller
             $missions = Mission::query()
             ->where('user_id', auth()->id())
             ->latest('date')
-            ->paginate(5);
+            ->paginate(10);
             return MissionResource::collection($missions);
         }
         return view('pages.missions.index');

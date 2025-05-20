@@ -19,7 +19,7 @@ class ExemptionController extends Controller
             $exemptions = Exemption::query()
             ->where('user_id', auth()->id())
             ->latest('date')
-            ->paginate(5);
+            ->paginate(10);
             return ExemptionResource::collection($exemptions);
         }
         return view('pages.exemptions.index');
