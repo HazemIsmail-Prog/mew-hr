@@ -25,8 +25,8 @@ class MissionValidation implements ValidationRule
             $fail(__('You have a previous mission for this day'));
             return;
         }
-        if (auth()->user()->monthlyMissionsCount(date:$date, id:$this->id) >= 12) {
-            $fail(__('You cannot have more than 12 missions per month'));
+        if (auth()->user()->monthlyMissionsCount(date:$date, id:$this->id) >= 21) {
+            $fail(__('You cannot have more than 21 missions per month'));
             return;
         }
 
