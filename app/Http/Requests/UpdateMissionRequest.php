@@ -25,6 +25,7 @@ class UpdateMissionRequest extends FormRequest
 
         return [
             'date' => ['required', 'date', 'before_or_equal:today', new MissionValidation($this->id)],
+            'time' => ['required_if:direction,in,out'],
             'reason' => 'required|string',
             'direction' => 'required|string',
             'notes' => 'nullable|string',

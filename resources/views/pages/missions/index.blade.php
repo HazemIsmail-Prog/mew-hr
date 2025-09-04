@@ -80,6 +80,9 @@
                     <option :selected="form.direction == 'in-out'" value="in-out">{{__('In & Out')}}</option>
                 </flux:select>
                 <flux:input x-model="form.date" :label="__('Date')" type="date" />
+                <div x-show="form.direction !== 'in-out'">
+                    <flux:input x-model="form.time" :label="__('Time')" type="time" />
+                </div>
                 <flux:input x-model="form.reason" :label="__('Reason')" type="text" />
                 <flux:input x-model="form.notes" :label="__('Notes')" type="text" />
                 <p class="text-sm text-red-500 dark:text-red-400 mt-2">{{__('in case of multipule days mission paper should be provided')}}</p>
@@ -175,6 +178,7 @@
                     return {
                         direction: '',
                         date: new Date().toISOString().split('T')[0],
+                        time: '',
                         reason: '',
                         notes: ''
                     };

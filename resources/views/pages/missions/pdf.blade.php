@@ -55,6 +55,20 @@
             font-size: 18px;
             font-weight: bold;
         }
+        .time-title {
+            position: absolute;
+            top: 460px;
+            left: 200px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .time {
+            position: absolute;
+            top: 460px;
+            left: 150px;
+            font-size: 18px;
+            font-weight: bold;
+        }
         .name {
             position: absolute;
             top: 495px;
@@ -145,6 +159,10 @@
     <div class="name">{{$mission->user->name}}</div>
     <div class="cid">{{$mission->user->cid}}</div>
     <div class="file-number">{{$mission->user->file_number}}</div>
+    @if($mission->time && $mission->direction != 'in-out')
+        <div class="time-title" style="color:black;width: 65px;">الوقت:</div>
+        <div class="time">{{$mission->time->format('H:i')}}</div>
+    @endif
     <div class="employee-signature">
         <img  class="employee-signature" src="data:image/png;base64,{{ $employeeSignatureBase64 }}" alt="توقيع المستخدم" class="signature-image">
     </div>  

@@ -20,6 +20,7 @@ class MissionResource extends JsonResource
             'user_id' => $this->user_id,
             'user' => new UserResource($this->whenLoaded('user')),
             'date' => $this->date->format('Y-m-d'),
+            'time' => $this->time?->format('H:i'),
             'approved_missions_count' => $this->user->monthlyMissionsCount(date:$this->date, status:'approved'),
             'translated_approved_missions_count' => __('Approved Missions in') . ' ' . __($this->date->format('F')) . ' ' . __($this->date->format('Y')),
             'direction' => $this->direction,

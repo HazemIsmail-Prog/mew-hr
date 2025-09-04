@@ -13,6 +13,7 @@ class Mission extends Model
     protected $fillable = [
         'user_id',
         'date',
+        'time',
         'reason',
         'direction',
         'status',
@@ -25,6 +26,7 @@ class Mission extends Model
 
     protected $casts = [
         'date' => 'date',
+        'time' => 'datetime',
         'approved_at' => 'datetime',
         'rejected_at' => 'datetime',
     ];
